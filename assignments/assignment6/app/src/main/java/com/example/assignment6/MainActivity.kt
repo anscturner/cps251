@@ -208,8 +208,8 @@ fun LoginScreen(onLoginSuccess: (String) -> Unit) {
                         imeAction = ImeAction.Next
                     ),
 
-                    isError = nameError && !validEmailBool,
-                    supportingText = {if(nameError && !validEmailBool)Text("Invalid email")},
+                    isError = emailError && !validEmailBool,
+                    supportingText = {if(emailError && !validEmailBool)Text("Invalid email")},
                     leadingIcon = {Icon(imageVector = Icons.Default.Email, contentDescription = "")},
                     label = {Text("Email")}
                 )
@@ -244,10 +244,10 @@ fun LoginScreen(onLoginSuccess: (String) -> Unit) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(onClick = {
-                    if (name.isEmpty()) nameError = true else nameError = false
-                    if(email != validEmail) validEmailBool = false else validEmailBool = true
-                    if(!isValidEmail(email)) emailError = true else emailError = false
-                    if(password != validPassword) passwordError = true else passwordError = false
+                    nameError = name.isEmpty()
+                    validEmailBool = email == validEmail
+                    emailError = if(!isValidEmail(email)) true else false
+                    passwordError = password != validPassword
                     if(!nameError && !emailError && validEmailBool && !passwordError)
                         onLoginSuccess(name.trim())
 
@@ -361,7 +361,7 @@ fun ProfileRow(label: String, value: String) {
  */
 fun isValidEmail(email: String): Boolean {
     val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$".toRegex()
-    return email.matches(emailRegex)
+    return email.matches(emailRegex) && email == "student@wccnet.edu"
 }
 
 /**
