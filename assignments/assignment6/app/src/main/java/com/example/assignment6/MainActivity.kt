@@ -208,8 +208,8 @@ fun LoginScreen(onLoginSuccess: (String) -> Unit) {
                         imeAction = ImeAction.Next
                     ),
 
-                    isError = emailError && !validEmailBool,
-                    supportingText = {if(emailError && !validEmailBool)Text("Invalid email")},
+                    isError = nameError && !validEmailBool,
+                    supportingText = {if(nameError && !validEmailBool)Text("Invalid email")},
                     leadingIcon = {Icon(imageVector = Icons.Default.Email, contentDescription = "")},
                     label = {Text("Email")}
                 )
@@ -245,8 +245,8 @@ fun LoginScreen(onLoginSuccess: (String) -> Unit) {
 
                 Button(onClick = {
                     if (name.isEmpty()) nameError = true else nameError = false
-                    if(!isValidEmail(email)) emailError = true else emailError = false
                     if(email != validEmail) validEmailBool = false else validEmailBool = true
+                    if(!isValidEmail(email)) emailError = true else emailError = false
                     if(password != validPassword) passwordError = true else passwordError = false
                     if(!nameError && !emailError && validEmailBool && !passwordError)
                         onLoginSuccess(name.trim())
